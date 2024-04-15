@@ -25,8 +25,7 @@ void main() {
           playSound: true,
         )
       ],
-      debug: true
-  );
+      debug: true);
   runApp(const MyApp());
 }
 
@@ -38,11 +37,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         fontFamily: 'Lato',
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(
-            color: Colors.white
-          )
-        ),
+        appBarTheme:
+            const AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
         useMaterial3: true,
       ),
       home: const OpeningScreen(),
@@ -58,7 +54,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   void initState() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
@@ -70,102 +65,82 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   TabBar get _tabBar => const TabBar(
-      labelColor: Colors.amber,
-      unselectedLabelColor: Colors.white,
-      indicatorColor: Colors.amber,
-      indicatorSize: TabBarIndicatorSize.tab,
-      tabs: [
-        Tab(text: 'Course Contents'),
-        Tab(text: 'Quizzes'),
-        Tab(text: 'Forum')
-      ]
-  );
+          labelColor: Colors.amber,
+          unselectedLabelColor: Colors.white,
+          indicatorColor: Colors.amber,
+          indicatorSize: TabBarIndicatorSize.tab,
+          tabs: [
+            Tab(text: 'Course Contents'),
+            Tab(text: 'Quizzes'),
+            Tab(text: 'Forum')
+          ]);
 
   @override
   Widget build(BuildContext context) {
-   return DefaultTabController(
-     length: 3,
-     child: Scaffold(
-       appBar: AppBar(
-         backgroundColor: const Color(0xFF1E213D),
-         title: const Text(
-           "StudySync",
-           style: TextStyle(
-             fontWeight: FontWeight.w700,
-             color: Colors.white
-           ),
-         ),
-         centerTitle: true,
-         bottom: PreferredSize(
-           preferredSize: _tabBar.preferredSize,
-           child: Material(
-             color: const Color(0xFF212761),
-             child: _tabBar,
-           ),
-         )
-       ),
-
-       drawer: Drawer(
-         // Add a ListView to the drawer. This ensures the user can scroll
-         // through the options in the drawer if there isn't enough vertical
-         // space to fit everything.
-         child: ListView(
-           //Remove padding from the ListView.
-           padding: EdgeInsets.zero,
-           children: [
-
-             const SizedBox(
-               height: 90,
-               child: DrawerHeader(
-                 decoration: BoxDecoration(
-                   color: Colors.blue,
-                 ),
-                 child: Text('Navigate',
-                   style: TextStyle(
-                       fontWeight: FontWeight.w600,
-                       fontSize: 22,
-                       color: Colors.black
-                   ),
-                 ),
-               ),
-             ),
-
-             ListTile(
-               title: const Text('Subjects'),
-
-               onTap: () {
-
-                 Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (context) => const Subjects())
-                 );
-
-               },
-             ),
-
-             ListTile(
-               title: const Text('User Settings'),
-
-               onTap: () {
-
-                 Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => const SettingsPage())
-                 );
-
-               },
-             ),
-           ],
-         ),
-       ),
-
-       body: const TabBarView(children: [
-         // ScheduleScreen(),
-         // ActivityScreen(),
-         // StudyTimerScreen(),
-       ]),
-     ),
-   );
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+            backgroundColor: const Color(0xFF1E213D),
+            title: const Text(
+              "StudySync",
+              style:
+                  TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
+            ),
+            centerTitle: true,
+            bottom: PreferredSize(
+              preferredSize: _tabBar.preferredSize,
+              child: Material(
+                color: const Color(0xFF212761),
+                child: _tabBar,
+              ),
+            )),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const SizedBox(
+                height:
+                    115, // Adjust height if necessary to fit icon and text appropriately
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Color(0xFF1E213D), // Same as AppBar background color
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.menu, color: Colors.white), // Drawer icon
+                      SizedBox(width: 10), // Space between icon and text
+                    ],
+                  ),
+                ),
+              ),
+              ListTile(
+                title: const Text('Subjects'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Subjects()));
+                },
+              ),
+              ListTile(
+                title: const Text('User Settings'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SettingsPage()));
+                },
+              ),
+            ],
+          ),
+        ),
+        body: const TabBarView(children: [
+          // ScheduleScreen(),
+          // ActivityScreen(),
+          // StudyTimerScreen(),
+        ]),
+      ),
+    );
   }
 }
-

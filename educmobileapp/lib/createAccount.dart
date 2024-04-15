@@ -18,9 +18,10 @@ class Album {
     // using pattern matching
     return switch (json) {
       {
-      'success': bool success,
-      'message': String message,
-      } => Album(success: success, message: message),
+        'success': bool success,
+        'message': String message,
+      } =>
+        Album(success: success, message: message),
       _ => throw const FormatException('Failed to load album')
     };
   }
@@ -38,7 +39,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool navigate = false;
+  bool navigate = true;
 
   @override
   void dispose() {
@@ -53,24 +54,23 @@ class CreateAccountPageState extends State<CreateAccountPage> {
 
   Future<Album> createAlbum(String name, String email, String password) async {
     var url = Uri.parse('http://10.0.2.2:8000/api/register');
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String> {
-        'name': name,
-        'email': email,
-        'password': password
-      })
-    );
+    final response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'name': name,
+          'email': email,
+          'password': password
+        }));
 
-    if (response.statusCode == 200 && jsonDecode(response.body)['success'] == true) {
+    if (response.statusCode == 200 &&
+        jsonDecode(response.body)['success'] == true) {
       navigate = true;
       return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-    }
-    else {
-      print('Failed to create album. Server responded with status code ${response.statusCode}');
+    } else {
+      print(
+          'Failed to create album. Server responded with status code ${response.statusCode}');
       print('Error Message: ${response.body}');
       throw Exception('Failed to create album');
     }
@@ -81,12 +81,10 @@ class CreateAccountPageState extends State<CreateAccountPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF1E213D),
-        title: const Text('Create Account',
+        title: const Text(
+          'Create Account',
           style: TextStyle(
-              color: Colors.white,
-              fontSize: 26,
-              fontWeight: FontWeight.bold
-          ),
+              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
         ),
       ),
       backgroundColor: const Color(0xFF1E213D),
@@ -95,19 +93,18 @@ class CreateAccountPageState extends State<CreateAccountPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            const Padding(padding: EdgeInsets.only(left: 25, right: 25, top: 70),
+            const Padding(
+              padding: EdgeInsets.only(left: 25, right: 25, top: 70),
               child: Text(
                 'Username',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
-                    fontWeight: FontWeight.w400
-                ),
+                    fontWeight: FontWeight.w400),
               ),
             ),
-
-            Padding(padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(
@@ -115,61 +112,47 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                     fillColor: Colors.white,
                     hintText: 'Username',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(10.0)
-                        ),
-                        borderSide: BorderSide(
-                            width: 1.0,
-                            color: Colors.white
-                        )
-                    )
-                ),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(width: 1.0, color: Colors.white))),
               ),
             ),
-
-            const Padding(padding: EdgeInsets.symmetric(horizontal: 25),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25),
               child: Text(
                 'Email',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
-                    fontWeight: FontWeight.w400
-                ),
+                    fontWeight: FontWeight.w400),
               ),
             ),
-
-        Padding(padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          child: TextFormField(
-            controller: _emailController,
-            decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Email',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10.0)
-                    ),
-                    borderSide: BorderSide(
-                        width: 1.0,
-                        color: Colors.white
-                    )
-                )
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Email',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(width: 1.0, color: Colors.white))),
+              ),
             ),
-          ),
-        ),
-
-            const Padding(padding: EdgeInsets.symmetric(horizontal: 25),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25),
               child: Text(
                 'Password',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
-                    fontWeight: FontWeight.w400
-                ),
+                    fontWeight: FontWeight.w400),
               ),
             ),
-
-            Padding(padding: const EdgeInsets.only(left: 20, right: 20, bottom: 60),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 60),
               child: TextFormField(
                 controller: _passwordController,
                 decoration: const InputDecoration(
@@ -177,18 +160,11 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                     fillColor: Colors.white,
                     hintText: 'Password',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(10.0)
-                        ),
-                        borderSide: BorderSide(
-                            width: 1.0,
-                            color: Colors.white
-                        )
-                    )
-                ),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(width: 1.0, color: Colors.white))),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Center(
@@ -197,33 +173,29 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                   height: 70,
                   child: ElevatedButton(
                       onPressed: () {
-
                         setState(() {
-                          futureAlbum = createAlbum(_nameController.text, _emailController.text, _passwordController.text);
+                          futureAlbum = createAlbum(_nameController.text,
+                              _emailController.text, _passwordController.text);
                         });
 
                         if (navigate == true) {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const LoginPage())
-                          );
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()));
                         }
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFFF7DE),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)
-                          )
-                      ),
+                              borderRadius: BorderRadius.circular(10.0))),
                       child: const Text(
                         'Sign Up',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black
-                        ),
-                      )
-                  ),
+                            color: Colors.black),
+                      )),
                 ),
               ),
             ),
