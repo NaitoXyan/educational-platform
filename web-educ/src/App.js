@@ -1,12 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
-import SignUp from './educsignup.js';
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import SignUp from './pages/Authentication/SignUp/index.js';
 
 function App() {
   return (
-    <SignUp />
+    <>
+    </>
   );
 }
 
